@@ -1,4 +1,4 @@
-Java-Game-Engine
-================
+Java 2D Game Engine
+===================
 
 Java game engine
