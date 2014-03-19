@@ -15,14 +15,13 @@ import src.run.GameVersion;
 
 public class Reference
 {
-    public static final String DISPLAY = "Display";
-	public static final int WIDTH = 300;
-	public static final int HEIGHT = WIDTH / 16 * 9; // Calculation done is class 168px
-	public static final int scale = 3;
+	//public static final int WIDTH = 300;
+	//public static final int HEIGHT = WIDTH / 16 * 9; // Calculation done is class 168px
+	//public static final int scale = 3;
     
-	public static final String GAME_NAME = "Game";
-    public static final String ENGINE_NAME = "BitModule";
-    public static final String ENGINE_LONG_NAME = "Bit Module Engine";
+    public static final String DISPLAY = "Display";
+	public static final String ENGINE_NAME = "BitModule";
+    public static final String ENGINE_LONG_NAME = "BitModule Game Engine";
 	public static final String TITLE = Game.RUNNING + " " + GameVersion.GAME_VERSION;
 
     public static final String IS_RUNNING = "Running...";

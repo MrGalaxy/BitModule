@@ -12,7 +12,7 @@ package src.run;
 
 public class Game
 {
-    public static final String RUNNING = "ExGame";
+    public static final String RUNNING = "ExGame"; // Novus Mundus
 
 
 }
