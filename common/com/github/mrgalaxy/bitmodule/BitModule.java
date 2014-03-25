@@ -1,12 +1,17 @@
-package com.github.mrgalaxy.bit_module;
+package com.github.mrgalaxy.bitmodule;
 
 import java.awt.BorderLayout;
 import java.awt.Canvas;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferInt;
 
 import javax.swing.JFrame;
 
-import com.github.mrgalaxy.bit_module.lib.Reference;
+import com.github.mrgalaxy.bitmodule.lib.Reference;
 
 /**
  * BitModule.
@@ -21,12 +26,12 @@ import com.github.mrgalaxy.bit_module.lib.Reference;
 public class BitModule extends Canvas implements Runnable
 {
     private static final long serialVersionUID = 1L;
-
-    public static int WIDTH = 300;
-    public static int HIGHT = WIDTH / 16 * 9;// = 168
+    
+    public static int WIDTH = 300; // 300
+    public static int HEIGHT = WIDTH / 16 * 9; // = 168 // WIDTH / 16 * 9
     public static int SCALE = 3; // From 1 - 5
     
-    public static BitModule engine;
+    public static BitModule bitengine;
     
     private JFrame frame;
     
@@ -34,12 +39,15 @@ public class BitModule extends Canvas implements Runnable
     
     public int tickCount = 0;
 
+    private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
+    private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
+    
     
     public BitModule()
     {
-        setMinimumSize(new Dimension(WIDTH * SCALE, HIGHT * SCALE));
-        setMaximumSize(new Dimension(WIDTH * SCALE, HIGHT * SCALE));
-        setPreferredSize(new Dimension(WIDTH * SCALE, HIGHT * SCALE));
+        setMinimumSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
+        setMaximumSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
+        setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
         
         frame = new JFrame(Reference.ENGINE_NAME); // Window Name -
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -109,7 +117,7 @@ public class BitModule extends Canvas implements Runnable
             {
                 lastTimer += 1000;
                 
-                System.out.println("Ticks; " + ticks + ", " + "FPS; " + frames);
+                System.out.println(Reference.ENGINE_NAME + ": " + ticks + " Ticks, " + frames + " FPS");
                 
                 frames = 0;
                 ticks = 0;
@@ -119,12 +127,32 @@ public class BitModule extends Canvas implements Runnable
     
     public void tick()
     {
+        tickCount++;
         
+        for (int i = 0; i < pixels.length; i++);
+        {
+            pixels[i] = i + tickCount;
+        }
     }
     
     public void render()
     {
+        BufferStrategy bs = getBufferStrategy();
+        if(bs == null)
+        {
+            createBufferStrategy(4);
+            return;
+        }
         
+        Graphics g = bs.getDrawGraphics();
+        
+        g.setColor(Color.BLACK);
+        g.fillRect(0, 0, getWidth(), getHeight());
+        
+        g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
+        
+        g.dispose();
+        bs.show();        
     }
     
     public static void main(String[]args)

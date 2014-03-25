@@ -1,8 +1,8 @@
-package com.github.mrgalaxy.bit_module.lib;
+package com.github.mrgalaxy.bitmodule.lib;
 
 
 /**
- * Project_Engine.
+ * BitModule.
  * 
  * Engine Version handler class
  * [ (0.0.0) Rel: 0 ]

@@ -1,10 +1,10 @@
-package com.github.mrgalaxy.bit_module.lib;
+package com.github.mrgalaxy.bitmodule.lib;
 
 import src.run.Game;
 import src.run.GameVersion;
 
 /**
- * Project_Engine.
+ * BitModule.
  * 
  * Engine Client Reference Class
  * 

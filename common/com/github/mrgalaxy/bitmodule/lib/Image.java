@@ -1,7 +1,7 @@
-package com.github.mrgalaxy.bit_module.lib;
+package com.github.mrgalaxy.bitmodule.lib;
 
 /**
- * Project_Engine.
+ * BitModule.
  * 
  * Image Strings Class
  * 

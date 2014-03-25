@@ -1,4 +1,4 @@
-package com.github.mrgalaxy.bit_module.gfx;
+package com.github.mrgalaxy.bitmodule.gfx;
 
 /**
  * BitModule.
