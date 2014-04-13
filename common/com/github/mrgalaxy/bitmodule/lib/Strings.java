@@ -17,7 +17,7 @@ public class Strings
     public static final String BETA = "Beta";
     
     /** Other */
-    public static final String BUILD_DEV = "!!- DEV-VERSION -!!";
+    public static final String SPACE = " ";
     public static final String string = "Hello";
     
 }

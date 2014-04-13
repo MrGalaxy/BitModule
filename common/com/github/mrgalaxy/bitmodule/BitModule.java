@@ -2,7 +2,6 @@ package com.github.mrgalaxy.bitmodule;
 
 import java.awt.BorderLayout;
 import java.awt.Canvas;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
@@ -11,6 +10,9 @@ import java.awt.image.DataBufferInt;
 
 import javax.swing.JFrame;
 
+import com.github.mrgalaxy.bitmodule.gfx.Screen;
+import com.github.mrgalaxy.bitmodule.gfx.SpriteSheet;
+import com.github.mrgalaxy.bitmodule.lib.Image;
 import com.github.mrgalaxy.bitmodule.lib.Reference;
 
 /**
@@ -27,21 +29,20 @@ public class BitModule extends Canvas implements Runnable
 {
     private static final long serialVersionUID = 1L;
     
-    public static int WIDTH = 300; // 300
-    public static int HEIGHT = WIDTH / 16 * 9; // = 168 // WIDTH / 16 * 9
-    public static int SCALE = 3; // From 1 - 5
+    public static int WIDTH =           300;                    // 300
+    public static int HEIGHT =          WIDTH / 16 * 9;         // = 168 // WIDTH / 16 * 9
+    public static int SCALE =           3;                      // From 1 - 5
+    public static BitModule             _bitengine;
+    private JFrame                      _frame;
     
-    public static BitModule bitengine;
+    public boolean running =            false;
     
-    private JFrame frame;
-    
-    public boolean running = false;
-    
-    public int tickCount = 0;
+    public int tickCount =              0;
 
-    private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
-    private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
+    private BufferedImage image =       new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
+    private int[] pixels =              ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
     
+    private Screen                      _screen;
     
     public BitModule()
     {
@@ -49,16 +50,21 @@ public class BitModule extends Canvas implements Runnable
         setMaximumSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
         setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
         
-        frame = new JFrame(Reference.ENGINE_NAME); // Window Name -
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLayout(new BorderLayout());
+        _frame = new JFrame(Reference.TITLE); // Window Title - Title Name
+        _frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        _frame.setLayout(new BorderLayout());
         
-        frame.add(this, BorderLayout.CENTER);
-        frame.pack();
-        frame.setResizable(false);
-        frame.setLocationRelativeTo(null);
+        _frame.add(this, BorderLayout.CENTER);
+        _frame.pack();
+        _frame.setResizable(false);
+        _frame.setLocationRelativeTo(null);
         
-        frame.setVisible(true);
+        _frame.setVisible(true);
+    }
+    
+    public void init()
+    {
+        _screen = new Screen(WIDTH, HEIGHT, new SpriteSheet (Image.SHEET_1));
     }
     
     public synchronized void start()
@@ -82,6 +88,8 @@ public class BitModule extends Canvas implements Runnable
         
         long lastTimer = System.currentTimeMillis();
         double delta = 0;
+        
+        init();
         
         while (running)
         {
@@ -117,7 +125,7 @@ public class BitModule extends Canvas implements Runnable
             {
                 lastTimer += 1000;
                 
-                System.out.println(Reference.ENGINE_NAME + ": " + ticks + " Ticks, " + frames + " FPS");
+                System.out.println( Reference.ENGINE_NAME + ": " + ticks + " Ticks, " + frames + " FPS" );
                 
                 frames = 0;
                 ticks = 0;
@@ -128,11 +136,6 @@ public class BitModule extends Canvas implements Runnable
     public void tick()
     {
         tickCount++;
-        
-        for (int i = 0; i < pixels.length; i++);
-        {
-            pixels[i] = i + tickCount;
-        }
     }
     
     public void render()
@@ -144,20 +147,16 @@ public class BitModule extends Canvas implements Runnable
             return;
         }
         
+        _screen.render(pixels, 0, WIDTH);
+        
         Graphics g = bs.getDrawGraphics();
-        
-        g.setColor(Color.BLACK);
-        g.fillRect(0, 0, getWidth(), getHeight());
-        
         g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
         
+        //g.setColor(Color.white); // TODO: Remove
+        //g.fillRect(0, 0, getWidth(), getHeight()); // TODO: Remove
+        
         g.dispose();
-        bs.show();        
-    }
-    
-    public static void main(String[]args)
-    {
-        new BitModule().start();
+        bs.show();
     }
     
 }

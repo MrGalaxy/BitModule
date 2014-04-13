@@ -1,9 +1,11 @@
 package src.run;
 
+import com.github.mrgalaxy.bitmodule.lib.Strings;
+
 /**
- * ExGame.
+ * Fear Atlas.
  * 
- * Game Version handler class
+ * Game Version class
  * [ (0.0.0) Rel: 0 ]
  * 
  * @author Mr_Galaxy
@@ -20,5 +22,5 @@ public class GameVersion
 	public static final int RELEASE_VERSION = 0;
 	
 	
-	public static final String GAME_VERSION = "( " + MAJOR_VERSION + "." + MINOR_VERSION + "." + REVISION_VERSION + " ) " + "[ " + "Rel: " + RELEASE_VERSION + " ]";                                           
+	public static final String GAME_VERSION = "( " + Strings.ALPHA + " " + MAJOR_VERSION + "." + MINOR_VERSION + "." + REVISION_VERSION + " ) " + "[ " + "Rel: " + RELEASE_VERSION + " ]";                                           
 }
